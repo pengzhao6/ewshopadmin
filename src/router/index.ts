@@ -1,7 +1,7 @@
 // 2. 定义一些路由
 // 每个路由都需要映射到一个组件。
-import Home from "../views/home/Home.vue";
-import Login from "../views/login/Login.vue";
+import Home from "@/views/home/Home.vue";
+import Login from "@/views/login/Login.vue";
 import {createRouter, createWebHistory} from "vue-router";
 
 const routes = [
