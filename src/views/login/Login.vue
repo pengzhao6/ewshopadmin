@@ -16,7 +16,7 @@
               size="large"
           >
             <n-form-item path="username">
-              <n-input v-model:value="formInline.username" placeholder="输入姓名" >
+              <n-input v-model:value="formInline.username" placeholder="super@a.com" >
               <template #prefix>
                 <n-icon size="18" color="#808695">
                   <PersonOutline />
@@ -51,19 +51,56 @@
 </template>
 
 <script lang="ts" setup>
-  import {reactive} from "vue";
+  import {reactive,ref} from "vue";
   import { PersonOutline, LockClosedOutline} from "@vicons/ionicons5";
+  import {useUserStore} from "@/store/user";
 
+
+  const formRef = ref()
+  const loading = ref(false)
+  const userStore = useUserStore()
+
+  interface FormState {
+    email: string;
+    password: string;
+  }
   const formInline = reactive({
-    username: 'zhangsan',
-    password: '123456'
+    username: 'super@a.com',
+    password: '123123'
 
   })
   const rules = {
-
+    username: {required: true,message: '请输入用户名',trigger: "blur"},
+    password: {required: true,message: '请输入密码',trigger: "blur"}
   }
   const handleSubmit =() => {
-    console.log(11)
+    // console.log(11)
+    //表单验证
+    formRef.value.validate(async (errors: any) => {
+      console.log(!errors)
+      if (!errors) {
+        const {username,password} = formInline
+        loading.value = true
+        //调整数据结构
+        const params: FormState = {
+          email: username,
+          password
+        };
+        try {
+          console.log(params)
+          userStore.login(params).then(_res => {
+            loading.value = false
+            console.log(_res)
+          }).catch(()=>{
+            loading.value = false
+          })
+        }finally {
+          loading.value = false
+        }
+      }else {
+
+      }
+    })
   }
 </script>
 
