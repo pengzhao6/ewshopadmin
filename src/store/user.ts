@@ -57,11 +57,12 @@ export const useUserStore = defineStore({
         async login(userInfo: object) {
             try {
                 const response: any = await login(userInfo);
+                console.log(response)
                 if (response.access_token) {
                     // console.log(111)
                     this.setToken(response.access_token);
                     // 登录之后，token已经拿到了，然后getUser获取调用,
-                    //return await this.getUser();
+                    return await this.getUser();
                 }
             } catch (error) {
                 // console.log(error);
