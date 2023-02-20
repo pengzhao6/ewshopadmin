@@ -1,8 +1,9 @@
-import { RouteRecordRaw} from "vue-router";
+import {RouteRecordRaw} from "vue-router";
 import Layout from "@/layout/index.vue";
-import { renderIcon } from "@/utils";
-import {Browsers} from "@vicons/ionicons5";
-const routeName = "dashboard";
+import {Body} from "@vicons/ionicons5";
+import {renderIcon} from "@/utils";
+
+const routeName = "category";
 /**
  * @param name 路由名称, 必须设置,且不能重名
  * @param meta 路由元信息（路由附带扩展信息）
@@ -11,30 +12,30 @@ const routeName = "dashboard";
  * @param meta.title 菜单名称
  * @param meta.icon 菜单图标
  * @param meta.sort 排序越小越排前
- *
- * */
+ */
+
 const routes: Array<RouteRecordRaw> = [
     {
-        path: "/dashboard",
+        path: "/category",
         name: routeName,
         component: Layout,
-        redirect: "/dashboard/console",
-
+        redirect: "/category/list",
         meta: {
-            title: "首页统计",
-            icon: renderIcon(Browsers),
-            sort:-1,
+            title: "分类管理",
+            icon: renderIcon(Body),
+            sort: 0,
         },
         children: [
             {
-                path: "console",
-                name: `${routeName}_console`,
+                path: "list",
+                name: `${routeName}_list`,
                 meta: {
-                    title: "主控台",
-                    icon: renderIcon(Browsers),
+                    title: "分类列表",
+                    icon: "",
                 },
-                component: () => import("@/views/dashboard/Dashboard.vue"),
-            }]
+                component: () => import("@/views/category/index.vue"),
+            }
+        ]
     }
 ];
 export default routes;
